@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>IP Generator</title>
+  <style>
+    body { font-family: Arial; padding: 20px; }
+    input, button { padding: 10px; margin: 5px; }
+  </style>
+</head>
+<body>
+  <h2>IP Generator + Redirect</h2>
+  <input type="text" id="redirectUrl" placeholder="Enter a URL to redirect to">
+  <button onclick="generate()">Generate IP</button>
+  <div id="output"></div>
+
+  <script>
+    function generateIP(classType) {
+      let firstOctet;
+      if (classType === 'A') {
+        firstOctet = Math.floor(Math.random() * 127) + 1;
+      } else if (classType === 'B') {
+        firstOctet = Math.floor(Math.random() * 64) + 128;
+      } else {
+        firstOctet = Math.floor(Math.random() * 32) + 192;
+      }
+      const ip = [
+        firstOctet,
+        Math.floor(Math.random() * 256),
+        Math.floor(Math.random() * 256),
+        Math.floor(Math.random() * 256)
+      ].join('.');
+      return ip;
+    }
+
+    function generate() {
+      const url = document.getElementById('redirectUrl').value;
+      if (!url) {
+        alert('Please enter a URL!');
+        return;
+      }
+      const ip = generateIP('A'); // You can change to 'B' or 'C' as needed
+      const encodedUrl = encodeURIComponent(url);
+      const fakeLink = `${window.location.origin}/redirect.html?to=${encodedUrl}`;
+      document.getElementById('output').innerHTML = `
+        <p>Generated IP: <strong>${ip}</strong></p>
+        <p><a href="${fakeLink}" target="_blank">Visit ${ip}</a> (redirects to your URL)</p>
+      `;
+    }
+  </script>
+</body>
+</html>
