@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="refresh" content="0; URL=''" id="redirectMeta">
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const to = params.get('to');
+    if (to) {
+      document.getElementById('redirectMeta').setAttribute('content', `0; URL='${to}'`);
+    }
+  </script>
+</head>
+<body>
+  <p>Redirecting...</p>
+</body>
+</html>
